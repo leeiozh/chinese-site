@@ -1,0 +1,72 @@
+{% extends 'chinese/base.html' %}
+{% block title %}Add character{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body">
+                
+                    {% if messages %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endif %}
+                
+                    <h3 class="card-title text-center mb-4">Add character</h3>
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="id_character" class="form-label">Character</label>
+                            <input type="text" name="character" class="form-control {% if form.character.errors %}is-invalid{% endif %}" id="id_character" value="{{ form.character.value|default:'' }}">
+                            {% for error in form.character.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_pinyin" class="form-label">Pinyin</label>
+                            <input type="text" name="pinyin" class="form-control {% if form.pinyin.errors %}is-invalid{% endif %}" id="id_pinyin" value="{{ form.pinyin.value|default:'' }}">
+                            {% for error in form.pinyin.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="id_translation" class="form-label">Translation</label>
+                            <input type="text" name="translation" class="form-control {% if form.translation.errors %}is-invalid{% endif %}" id="id_translation" value="{{ form.translation.value|default:'' }}">
+                            {% for error in form.translation.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Add</button>
+                        </div>
+                    
+                                        {% if form.errors %}
+                        <div class="alert alert-danger mt-3">
+                            <strong>Error:</strong>
+                            <ul>
+                                {% for field, errors in form.errors.items %}
+                                    <li>{{ field }}: 
+                                        {% for error in errors %}
+                                            <strong>{{ error }}</strong>
+                                        {% endfor %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

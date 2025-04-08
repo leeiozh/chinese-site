@@ -1,0 +1,22 @@
+{% extends 'chinese/base.html' %}
+{% block title %}Ezhova Django Project{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg rounded-4 border-0">
+                <div class="card-body text-center py-5">
+                    <h1 class="card-title mb-4">你好!</h1>
+                    <p class="lead mb-5">Characters in database: {{ total }}</p>
+                    <div class="d-grid gap-3 col-10 mx-auto">
+                        <a href="{% url 'add' %}" class="btn btn-primary fancy-btn">Add character</a>
+                        <a href="{% url 'practice' %}" class="btn btn-success fancy-btn">Practice</a>
+                        <a href="{% url 'stats' %}" class="btn btn-danger fancy-btn">Stats</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

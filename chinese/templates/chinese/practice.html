@@ -1,0 +1,43 @@
+{% extends 'chinese/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Practice</h2>
+
+    <input type="hidden" name="char_id" value="{{ character.id }}">
+
+    {% if character %}
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <p class="display-1 text-center" style="margin-top: 30px; margin-bottom: 30px;">{{ character.character }}</p> 
+                <p class="text-center mb-4"><strong>Pinyin:</strong> {{ character.pinyin }}</p>
+
+                <form method="post" class="text-center">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" name="translation" class="form-control" placeholder="Translation" required>
+                    </div>
+                    <input type="hidden" name="char_id" value="{{ character.id }}">
+                    <button type="submit" class="btn btn-success mt-3 px-4">Check!</button>
+                </form>
+
+                {% if result %}
+                    <div class="mt-3">
+                        {% if result == 'correct' %}
+                            <div class="alert alert-success text-center">
+                                <strong>Correct!</strong>
+                            </div>
+                        {% elif result == 'incorrect' %}
+                            <div class="alert alert-danger text-center">
+                                <strong>Incorrect!</strong>
+                                <p><strong>Translation:</strong> {{ character.translation }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <p>No characters in database.</p>
+    {% endif %}
+</div>
+{% endblock %}
