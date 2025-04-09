@@ -8,6 +8,7 @@ class CharacterForm(forms.ModelForm):
     """Form for adding or editing a Chinese character."""
 
     class Meta:
+        """Form meta."""
         model = Character
         fields = ['character', 'pinyin', 'translation']
 

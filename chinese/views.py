@@ -8,7 +8,7 @@ from .forms import CharacterForm
 
 def home(request):
     """Home page view showing total number of characters."""
-    total = Character.objects.count()
+    total = Character.objects.count()  # pylint: disable=no-member
     return render(request, 'chinese/home.html', {'total': total})
 
 
@@ -33,8 +33,8 @@ def practice(request):
         char_id = request.POST.get('char_id')
 
         try:
-            character = Character.objects.get(id=char_id)
-        except Character.DoesNotExist:
+            character = Character.objects.get(id=char_id)  # pylint: disable=no-member
+        except Character.DoesNotExist:  # pylint: disable=no-member
             return render(request, 'chinese/practice.html', {
                 'result': 'error',
                 'character': None
@@ -50,7 +50,7 @@ def practice(request):
 
         request.session["last_character_id"] = character.id
 
-        queryset = Character.objects.all()
+        queryset = Character.objects.all()  # pylint: disable=no-member
         if queryset.count() > 1:
             queryset = queryset.exclude(id=character.id)
 
@@ -62,13 +62,13 @@ def practice(request):
             'character': new_character
         })
 
-    character = Character.objects.order_by('?').first()
+    character = Character.objects.order_by('?').first()  # pylint: disable=no-member
     return render(request, 'chinese/practice.html', {'character': character})
 
 
 def stats(request):
     """View showing stats for all characters. Supports reset and delete."""
-    characters = Character.objects.all()
+    characters = Character.objects.all()  # pylint: disable=no-member
 
     if request.method == 'POST':
         if 'reset' in request.POST:
@@ -79,15 +79,15 @@ def stats(request):
             messages.success(request, "Stats reset :(")
         elif 'delete_id' in request.POST:
             char_id = request.POST.get('delete_id')
-            Character.objects.filter(id=char_id).delete()
+            Character.objects.filter(id=char_id).delete()  # pylint: disable=no-member
             messages.success(request, "Character deleted!")
 
-        characters = Character.objects.all()
+        characters = Character.objects.all()  # pylint: disable=no-member
 
     return render(request, 'chinese/stats.html', {'characters': characters})
 
 
 def dictionary(request):
     """View displaying all characters in a dictionary format."""
-    characters = Character.objects.all()
+    characters = Character.objects.all()  # pylint: disable=no-member
     return render(request, 'chinese/dictionary.html', {'characters': characters})
