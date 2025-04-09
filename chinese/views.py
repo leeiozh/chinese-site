@@ -48,6 +48,7 @@ def practice(request):
 
         return render(request, 'chinese/practice.html', {
             'result': result,
+            'old_character': character,
             'character': new_character
         })
 
